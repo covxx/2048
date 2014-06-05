@@ -54,11 +54,8 @@ def menu():
                     return None
 #======================== main program===================
 menu()
+window = pygame.display.set_mode((185,185)) #resizes the window for gameplay to look good 
 #start of game
-window = pygame.display.set_mode((185,185)) 
-numnames = [0,2,4,8,16,32,64,128,256,512,1024,2048]
-numblocks = []
-
 for x in numnames: ##Appends image locations
     numname = "data/images/%i.jpg"%x
     numblocks.append(numname)
@@ -136,7 +133,10 @@ def keystrokes(aimgs,fg,als,move,b_i):
                 fg[3][rc] = 1
                 temp_img = aimgs[rr][rc][0]
                 aimgs[rr][rc][0] = b_i[0]
-                aimgs[3][rc][0] = temp_img
+                if aimgs[3][rc][0] == temp_img:
+                    aimgs[3][rc][0] = b_i[2]
+                else:
+                    aimgs[3][rc][0] = temp_img
             rc+=1
             if rc == 4:
                 rc = 0
