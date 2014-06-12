@@ -56,6 +56,11 @@ def menu():
 menu()
 window = pygame.display.set_mode((185,185)) #resizes the window for gameplay to look good 
 #start of game
+bg.fill((138,138,138))
+
+numnames = [0,2,4,8,16,32,64,128,256,512,1024,2048]
+numblocks = []
+
 for x in numnames: ##Appends image locations
     numname = "data/images/%i.jpg"%x
     numblocks.append(numname)
@@ -123,20 +128,49 @@ def firstblocks(aimgs,b_i,fg):
     initial(aimgs)
     return fg
 ####################
+##def genblock(aimgs,b_i,fg):
+##    b_flag = 0
+##    genflag = 0
+##    while genflag == 1:
+##        rr = random.randint(0,3)
+##        rc = random.randint(0,3)
+##        randnum = random.randint(1,10)
+##        if fg[rr][rc] == 0:
+##            if randnum < 10: ##Gives a 10% chance of a 4 generating
+##                print (aimgs[rr][rc])
+##                aimgs[rr][rc][0] = b_i[1]
+##                b_flag+=1
+##                genflag=1
+##            elif b_flag == 1:  ##Prevents two fours from generating initially
+##                print (aimgs[rr][rc])
+##                aimgs[rr][rc][0] = b_i[1]
+##                genflag=1
+##            else:
+##                print (aimgs[rr][rc])
+##                aimgs[rr][rc][0] = b_i[2]
+##                fg[rr][rc]+=1
+##                genflag=1
+##    initial(aimgs)
+##    return fg
+####################
 def keystrokes(aimgs,fg,als,move,b_i):
     if move == "down":
         rr = 0
         rc = 0
         for x in xrange(0,16):
             if (fg[rr][rc] == 1):
-                fg[rr][rc] = 0
-                fg[3][rc] = 1
                 temp_img = aimgs[rr][rc][0]
-                aimgs[rr][rc][0] = b_i[0]
                 if aimgs[3][rc][0] == temp_img:
+                    fg[rr][rc] = 0
+                    fg[3][rc] = 1
+                    aimgs[rr][rc][0] = b_i[0]
                     aimgs[3][rc][0] = b_i[2]
-                else:
+                elif aimgs[3][rc][0] == b_i[0]:
+                    fg[rr][rc] = 0
+                    fg[3][rc] = 1
+                    aimgs[rr][rc][0] = b_i[0]
                     aimgs[3][rc][0] = temp_img
+                    print ("bit")         
             rc+=1
             if rc == 4:
                 rc = 0
@@ -210,21 +244,25 @@ while True:
             if (event.key == K_DOWN):
                 move = "down"
                 keystrokes(allimages,flaggrid,axislocs,move,block_images)
+##                genblock(allimages,block_images,flaggrid)
                 initial(allimages)
                 print (flaggrid)
             if (event.key == K_UP):
                 move = "up"
                 keystrokes(allimages,flaggrid,axislocs,move,block_images)
+##                genblock(allimages,block_images,flaggrid)
                 initial(allimages)
                 print (flaggrid)
             if (event.key == K_RIGHT):
                 move = "right"
                 keystrokes(allimages,flaggrid,axislocs,move,block_images)
+##                genblock(allimages,block_images,flaggrid)
                 initial(allimages)
                 print (flaggrid)
             if (event.key == K_LEFT):
                 move = "left"
                 keystrokes(allimages,flaggrid,axislocs,move,block_images)
+##                genblock(allimages,block_images,flaggrid)
                 initial(allimages)
                 print (flaggrid)
     pygame.display.update()
